@@ -1,0 +1,6 @@
+@model TodoItem
+<form asp-action="AddItem" method="POST">
+    <label asp-for="title"> Add a new item:</label>
+    <input asp-for="title">
+    <button type="submit">Add</button>
+</form>

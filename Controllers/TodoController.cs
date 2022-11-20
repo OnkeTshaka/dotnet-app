@@ -30,6 +30,39 @@ namespace coreApp.Controllers
             //Render view using model
             return View(model);
         }
+           [ValidateAntiForgeryToken]
+           public async Task<IActionResult> AddItem(TodoItem newItem)
+        {
+            if (!ModelState.IsValid){
+                return RedirectToAction("index");
+            }
+            // get to-do items from database
+            var successful = await _todoItemService.AddItemAsync(newItem);
+            // Put items into a model
+            if(!successful){
+                return BadRequest("Could not add item.");
+            }
+
+            //Render view using model
+            return RedirectToAction("index");
+        }
+
+        [ValidateAntiForgeryToken]
+           public async Task<IActionResult> MarkDone(Guid id)
+        {
+            if (id == Guid.Empty){
+                return RedirectToAction("index");
+            }
+            // get to-do items from database
+            var successful = await _todoItemService.MarkDoneAsync(id);
+            // Put items into a model
+            if(!successful){
+                return BadRequest("Could not mark item.");
+            }
+
+            //Render view using model
+            return RedirectToAction("index");
+        }
 
     
 

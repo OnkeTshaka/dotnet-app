@@ -28,7 +28,9 @@ namespace coreApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            services.AddSingleton<ITodoItemService,FakeTodoItemService>();
+            // services.AddSingleton<ITodoItemService,FakeTodoItemService>();
+            services.AddScoped<ITodoItemService,TodoItemService>();
+            
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlite(
                     Configuration.GetConnectionString("DefaultConnection")));
@@ -65,7 +67,7 @@ namespace coreApp
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Todo}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
         }

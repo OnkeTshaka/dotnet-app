@@ -5,7 +5,7 @@
 }
 
 <div class="panel panel-default todo-panel">
-<div class="panel-heading">@ViewData["Title"]</div>
+<div class="panel-heading"><h1>@ViewData["Title"]</h1></div>
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -18,7 +18,10 @@
                 @foreach(var item in Model.Items){
                     <tr>
                     <td>
+                    <form asp-action="MarkDone" method="POST">
                     <input type="checkbox" class="done-checkbox"/>
+                    <input type="hidden" name="id" value="@item.id"/>
+                    </form>
                     </td>
                     <td>@item.title</td>
                     <td>@item.DueAt.Humanize()</td>
@@ -28,6 +31,7 @@
         </table>
         <div class="panel-footer add-item-form">
             <!-- Add item form  -->
+            @await Html.PartialAsync("AddItemPartial", new TodoItem())
         </div>
 </div>
 
